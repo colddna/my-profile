@@ -1,0 +1,453 @@
+/* ==========================================================================
+   1. COLOR PALETTE
+   Three colors only, stored as variables so they're easy to change later.
+   ========================================================================== */
+:root {
+  --color-bg: #e6e2dc;      /* pale warm stone grey: page background */
+  --color-text: #26231f;    /* near-black with a brown tint: body text */
+  --color-accent: #5f5446;  /* deep earthy taupe: headings, links, borders */
+
+  --radius: 0.375rem;       /* shared corner rounding */
+
+  /* ------------------------------------------------------------------------
+     FLUID TYPE SCALE (clamp)
+     clamp(MIN, PREFERRED, MAX):
+       MIN       = size on small phones (~375px wide)
+       PREFERRED = rem + vw, so text grows smoothly as the screen widens
+       MAX       = size on desktops (~1280px wide and up)
+     Mixing rem into the middle value keeps browser zoom working.
+     No breakpoints needed for font sizes.
+     ------------------------------------------------------------------------ */
+  --fs-body: clamp(1rem, 0.95rem + 0.22vw, 1.125rem);
+  --fs-h1:   clamp(2rem, 1.69rem + 1.33vw, 2.75rem);
+  --fs-h2:   clamp(1.4rem, 1.25rem + 0.62vw, 1.75rem);
+  --fs-h3:   clamp(1.1rem, 1.04rem + 0.27vw, 1.25rem);
+}
+
+
+/* ==========================================================================
+   2. BASE / RESET
+   Predictable sizing and a clean starting point.
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;          /* 1rem = browser default (usually 16px) */
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+/* ==========================================================================
+   3. PAGE LAYOUT & TYPOGRAPHY
+   Centered column, limited line length, system fonts.
+   ========================================================================== */
+/* Mobile-first: on phones the page uses the full screen width.
+   The larger 65ch max-width is applied in the media query (section 12). */
+body {
+  max-width: 100%;
+  margin: 0 auto;                 /* centers the page horizontally */
+  padding: 1.25rem 1rem;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: var(--fs-body);      /* fluid: 1rem -> 1.125rem */
+  line-height: 1.65;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--color-accent);
+  line-height: 1.25;
+  margin: 0 0 0.75rem;
+}
+
+/* Fluid heading sizes (see the type scale in section 1) */
+h1 { font-size: var(--fs-h1); }   /* 2rem   -> 2.75rem */
+h2 { font-size: var(--fs-h2); }   /* 1.4rem -> 1.75rem */
+h3 { font-size: var(--fs-h3); }   /* 1.1rem -> 1.25rem */
+
+p {
+  margin: 0 0 1rem;
+}
+
+a {
+  color: var(--color-accent);
+  text-underline-offset: 0.2em;
+}
+
+/* Hover effect for all clickable text (links + buttons):
+   text deepens to near-black and looks almost bold.
+   A text-shadow "faux bold" is used instead of font-weight so the
+   text doesn't grow wider and shove neighboring words around. */
+a,
+button {
+  transition: color 0.15s ease, text-shadow 0.15s ease;
+}
+
+a:hover,
+a:focus-visible,
+button:hover,
+button:focus-visible {
+  color: var(--color-text);
+  text-shadow: 0.03em 0 0 currentColor, -0.03em 0 0 currentColor;
+}
+
+
+/* ==========================================================================
+   4. HEADER
+   Profile photo, name, and tagline, centered.
+   ========================================================================== */
+header {
+  text-align: center;
+  padding-bottom: 2rem;
+}
+
+header img {
+  margin: 0 auto 1.25rem;
+  border-radius: 50%;            /* circular profile photo */
+  border: 3px solid var(--color-accent);
+}
+
+header p {
+  font-style: italic;
+  margin: 0;
+}
+
+
+/* ==========================================================================
+   5. NAVIGATION (flexbox)
+   Phones: links stacked vertically, one per line.
+   Larger screens: horizontal row (see section 12).
+   ========================================================================== */
+nav {
+  border-top: 1px solid var(--color-accent);
+  border-bottom: 1px solid var(--color-accent);
+  padding: 0.75rem 0;
+  margin-bottom: 2.5rem;
+}
+
+nav ul {
+  display: flex;
+  flex-direction: column;         /* stacked on phones */
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav a {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+nav a:hover,
+nav a:focus-visible {
+  text-decoration: underline;
+}
+
+/* --- Hamburger menu (phones only) ---------------------------------------
+   Three lines that open/close the nav. script.js adds the
+   .nav-collapsible class to <nav>; without it (JS off) the button stays
+   hidden and the links stay visible, so the nav always works.
+   "nav button.nav-toggle" is used so these rules beat the general
+   button styles in section 10. */
+
+nav button.nav-toggle {
+  display: none;
+}
+
+nav.nav-collapsible button.nav-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: 0 auto;
+  padding: 0.5rem;
+  background-color: transparent;
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+nav.nav-collapsible button.nav-toggle:hover,
+nav.nav-collapsible button.nav-toggle:focus-visible {
+  background-color: transparent;
+  border-color: var(--color-text);
+}
+
+/* The three lines */
+.nav-toggle-line {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background-color: var(--color-accent);
+  border-radius: 2px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+nav button.nav-toggle:hover .nav-toggle-line {
+  background-color: var(--color-text);
+}
+
+/* When open, the three lines turn into an X */
+.nav-toggle[aria-expanded="true"] .nav-toggle-line:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-line:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-line:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Links are collapsed by default on phones... */
+nav.nav-collapsible ul {
+  display: none;
+}
+
+/* ...and drop down when the button is open */
+nav.nav-collapsible .nav-toggle[aria-expanded="true"] + ul {
+  display: flex;
+  margin-top: 0.75rem;
+}
+
+
+/* ==========================================================================
+   6. MAIN SECTIONS
+   Even vertical spacing between each section.
+   ========================================================================== */
+main section {
+  margin-bottom: 3rem;
+}
+
+/* All headings inside <main> are italic and underlined */
+main h2,
+main h3 {
+  font-style: italic;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 2px;
+}
+
+
+/* ==========================================================================
+   7. SKILLS (grid)
+   Phones: 1 column.
+   Larger screens: 2x2 grid (see section 12).
+   ========================================================================== */
+#skills ul {
+  display: grid;
+  grid-template-columns: 1fr;     /* single column on phones */
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#skills li {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+
+/* ==========================================================================
+   8. ARTICLES (Projects & Recent Posts)
+   Each article gets a left accent bar and breathing room.
+   ========================================================================== */
+article {
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  border-left: 3px solid var(--color-accent);
+  margin-bottom: 1.75rem;
+}
+
+article p:last-child {
+  margin-bottom: 0;
+}
+
+
+/* ==========================================================================
+   9. ASIDE (80s computer joke)
+   Set apart from the main content with a dashed border.
+   ========================================================================== */
+aside {
+  padding: 1.25rem 1.5rem;
+  border: 1px dashed var(--color-accent);
+  border-radius: var(--radius);
+  margin-bottom: 3rem;
+}
+
+aside h2 {
+  font-size: var(--fs-h3);        /* smaller than main section headings */
+}
+
+aside p {
+  margin: 0;
+}
+
+
+/* ==========================================================================
+   10. CONTACT FORM
+   Full-width fields, comfortable padding, clear focus states.
+   ========================================================================== */
+form p {
+  margin-bottom: 1.25rem;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.375rem;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font: inherit;                       /* forms don't inherit fonts by default */
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 8rem;
+}
+
+/* Clear focus state: thick outline offset from the field */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--color-text);
+  outline-offset: 2px;
+  border-color: var(--color-text);
+}
+
+button {
+  padding: 0.75rem 1.75rem;
+  font: inherit;
+  font-weight: 600;
+  color: var(--color-bg);
+  background-color: var(--color-accent);
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+/* Button keeps light text on hover since its background turns near-black
+   (overrides the general clickable-text color in section 3) */
+button:hover,
+button:focus-visible {
+  color: var(--color-bg);
+  background-color: var(--color-text);
+  border-color: var(--color-text);
+}
+
+button:focus-visible {
+  outline: 3px solid var(--color-text);
+  outline-offset: 3px;
+}
+
+
+/* ==========================================================================
+   11. FOOTER
+   ========================================================================== */
+footer {
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-accent);
+}
+
+footer p {
+  margin: 0;
+}
+
+
+/* ==========================================================================
+   12. RESPONSIVE: TABLETS & DESKTOPS (min-width: 768px)
+   Everything above is the mobile (phone) default.
+   These rules override it on screens 768px and wider.
+   ========================================================================== */
+@media (min-width: 768px) {
+
+  /* Body re-centers in a readable column */
+  body {
+    max-width: 65ch;
+    padding: 2rem 1.5rem;
+  }
+
+  /* Nav switches to a horizontal row with even gaps */
+  nav ul {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  /* Hide the hamburger and always show the links */
+  nav.nav-collapsible button.nav-toggle {
+    display: none;
+  }
+
+  nav.nav-collapsible ul,
+  nav.nav-collapsible .nav-toggle[aria-expanded="true"] + ul {
+    display: flex;
+    margin-top: 0;
+  }
+
+  /* Skills become a 2x2 grid */
+  #skills ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+/* ==========================================================================
+   13. RESPONSIVE: LARGE TABLETS & DESKTOPS (min-width: 1024px)
+   Builds on section 12. Covers landscape tablets (e.g. iPad landscape)
+   and up. With this block, 768px–1023px acts as the "portrait tablet" range.
+   ========================================================================== */
+@media (min-width: 1024px) {
+
+  /* Font sizes are handled by clamp() in section 1, not here */
+  body {
+    padding: 3rem 2rem;
+  }
+
+  /* More breathing room between sections */
+  main section {
+    margin-bottom: 4rem;
+  }
+
+  /* Wider gaps between nav links and skill tiles */
+  nav ul {
+    gap: 2.5rem;
+  }
+
+  #skills ul {
+    gap: 1rem;
+  }
+
+  #skills li {
+    padding: 1rem 1.25rem;
+  }
+}

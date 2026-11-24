@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Personal profile of Travis, an engineer building for the future.">
+  <title>Travis | Profile</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <header>
+    <img src="https://placehold.co/200x200" alt="Profile photo of Travis" width="200" height="200">
+    <h1>Travis</h1>
+    <p>Build and construct anything that is hard to some and tear apart what is easy to few.</p>
+  </header>
+
+  <nav aria-label="Main navigation">
+    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+      <span class="nav-toggle-line"></span>
+      <span class="nav-toggle-line"></span>
+      <span class="nav-toggle-line"></span>
+    </button>
+    <ul id="nav-links">
+      <li><a href="#">About</a></li>
+      <li><a href="#">Skills</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section id="about">
+      <h2>About</h2>
+      <p>
+        As an analyst, I developed skills to break apart what is seen and find out
+        the workings of many problems. Carrying that mindset into the civilian world
+        opened my career path to fabrication and mechanics.
+      </p>
+    </section>
+
+    <section id="skills">
+      <h2>Skills</h2>
+      <ul>
+        <li>Fabricator</li>
+        <li>Welder</li>
+        <li>Mechanic</li>
+        <li>Computer enthusiast</li>
+      </ul>
+    </section>
+
+    <section id="currently-building">
+      <h2>Currently Building</h2>
+      <ul>
+        <li>Autonomous robot</li>
+        <li>Rover game for Android</li>
+      </ul>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+
+      <article>
+        <h3>Autonomous Robot</h3>
+        <p>A self-navigating robot that uses sensors to map its surroundings and avoid obstacles on its own.</p>
+        <a href="#">View project</a>
+      </article>
+
+      <article>
+        <h3>Rover Game for Android</h3>
+        <p>A mobile game where players drive a rover across rugged terrain, built for Android devices.</p>
+        <a href="#">View project</a>
+      </article>
+
+      <article>
+        <h3>Custom Welding Cart</h3>
+        <p>A heavy-duty welding cart fabricated from scratch, with storage for tanks, leads, and tools.</p>
+        <a href="#">View project</a>
+      </article>
+    </section>
+
+    <section id="recent-posts">
+      <h2>Recent Posts</h2>
+
+      <article>
+        <h3>Still Working</h3>
+        <p>Still working.</p>
+      </article>
+
+      <article>
+        <h3>Yep, Still Working</h3>
+        <p>Yep, I'm still working.</p>
+      </article>
+
+      <article>
+        <h3>You Guessed It</h3>
+        <p>You guessed it, I am still.....</p>
+      </article>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <form action="#" method="post">
+        <p>
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" autocomplete="name" required>
+        </p>
+
+        <p>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" required>
+        </p>
+
+        <p>
+          <label for="subject">Subject</label>
+          <select id="subject" name="subject">
+            <option value="general">General</option>
+            <option value="project-inquiry">Project inquiry</option>
+            <option value="other">Other</option>
+          </select>
+        </p>
+
+        <p>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="6" placeholder="Tell me about your project or question..." required></textarea>
+        </p>
+
+        <button type="submit">Send message</button>
+      </form>
+    </section>
+  </main>
+
+  <aside>
+    <h2>80s Computer Joke</h2>
+    <p>
+      Why did the 1980s computer need therapy?
+      It had a lot of emotional baggage and only 640K of memory to deal with it.
+    </p>
+  </aside>
+
+  <footer>
+    <p><small>&copy; 2026 Travis. All rights reserved.</small></p>
+  </footer>
+
+</body>
+</html>
