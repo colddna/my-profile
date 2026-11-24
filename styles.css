@@ -3,9 +3,9 @@
    Three colors only, stored as variables so they're easy to change later.
    ========================================================================== */
 :root {
-  --color-bg: #e6e2dc;      /* pale warm stone grey: page background */
+  --color-bg: #bfc0bd;      /* primer sealer grey: page background */
   --color-text: #26231f;    /* near-black with a brown tint: body text */
-  --color-accent: #5f5446;  /* deep earthy taupe: headings, links, borders */
+  --color-accent: #44474a;  /* neutral charcoal: headings, links, borders */
 
   --radius: 0.375rem;       /* shared corner rounding */
 
