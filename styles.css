@@ -24,6 +24,15 @@
   --fs-h3:   clamp(1.1rem, 1.04rem + 0.27vw, 1.25rem);
 }
 
+/* Dark theme: same three roles, swapped for a dark background.
+   Set by the theme toggle in the footer (see script.js). */
+:root[data-theme="dark"] {
+  --color-bg: #1f2022;      /* deep charcoal: page background */
+  --color-text: #e4e3df;    /* soft off-white: body text */
+  --color-accent: #a9acaf;  /* light grey: headings, links, borders */
+  color-scheme: dark;       /* dark scrollbars and form controls */
+}
+
 
 /* ==========================================================================
    2. BASE / RESET
@@ -377,8 +386,54 @@ footer {
   border-top: 1px solid var(--color-accent);
 }
 
+/* One row: copyright (left), greeting (middle), theme toggle (right).
+   Items are spaced evenly and centered vertically on the same line. */
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  padding-bottom: 0.5rem;
+}
+
 footer p {
   margin: 0;
+}
+
+.footer-greeting {
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+/* Theme toggle: an outlined button, smaller than the form's submit button */
+footer .theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  background-color: transparent;
+  border: 2px solid var(--color-accent);
+}
+
+footer .theme-toggle:hover,
+footer .theme-toggle:focus-visible {
+  color: var(--color-bg);
+  background-color: var(--color-text);
+  border-color: var(--color-text);
+}
+
+.theme-toggle-icon {
+  font-size: 1.1em;
+  line-height: 1;
+}
+
+/* Below 480px there isn't room for one row, so stack the items centered */
+@media (max-width: 479px) {
+  footer {
+    flex-direction: column;
+  }
 }
 
 

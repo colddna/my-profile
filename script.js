@@ -33,3 +33,62 @@ document.addEventListener("keydown", (event) => {
     toggle.focus();
   }
 });
+
+
+// ==========================================================================
+// Dark / light theme toggle (footer, bottom right)
+// The starting theme is set by a small script in the <head> of index.html:
+// the visitor's saved choice, or their system setting if they haven't chosen.
+// ==========================================================================
+
+const themeToggle = document.querySelector(".theme-toggle");
+const themeIcon = themeToggle.querySelector(".theme-toggle-icon");
+const themeText = themeToggle.querySelector(".theme-toggle-text");
+
+function applyTheme(theme) {
+  const isDark = theme === "dark";
+  document.documentElement.setAttribute("data-theme", theme);
+  // aria-pressed tells screen readers whether dark mode is on
+  themeToggle.setAttribute("aria-pressed", String(isDark));
+  // The button shows the mode you'll switch TO
+  themeIcon.textContent = isDark ? "☀" : "☾"; // sun : moon
+  themeText.textContent = isDark ? "Light mode" : "Dark mode";
+}
+
+applyTheme(document.documentElement.getAttribute("data-theme") || "light");
+
+themeToggle.addEventListener("click", () => {
+  const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+  const next = isDark ? "light" : "dark";
+  applyTheme(next);
+  try {
+    localStorage.setItem("theme", next); // remember the choice for next visit
+  } catch (error) {
+    // Storage can be blocked (e.g. private browsing); the toggle still works
+  }
+});
+
+
+// ==========================================================================
+// Dynamic greeting (footer, between the copyright and the theme toggle)
+// Uses the visitor's local time on a 24-hour clock:
+//   05:00 - 11:59  Good morning
+//   12:00 - 16:59  Good afternoon
+//   17:00 - 04:59  Good evening
+// ==========================================================================
+
+const greeting = document.querySelector("#greeting");
+
+function getGreeting(hour) {
+  if (hour >= 5 && hour < 12) return "Good morning";
+  if (hour >= 12 && hour < 17) return "Good afternoon";
+  return "Good evening";
+}
+
+function updateGreeting() {
+  greeting.textContent = getGreeting(new Date().getHours()) + "!";
+}
+
+updateGreeting();
+// Re-check every minute so the greeting changes if the page is left open
+setInterval(updateGreeting, 60 * 1000);

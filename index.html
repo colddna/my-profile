@@ -6,6 +6,17 @@
   <meta name="description" content="Personal profile of Travis, an engineer building for the future.">
   <title>Travis | Profile</title>
   <link rel="stylesheet" href="styles.css">
+  <!-- Apply the saved (or system) theme before the page paints, so there's no flash -->
+  <script>
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("theme"); } catch (e) {}
+      if (theme !== "dark" && theme !== "light") {
+        theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
   <script src="script.js" defer></script>
 </head>
 <body>
@@ -139,7 +150,12 @@
   </aside>
 
   <footer>
-    <p><small>&copy; 2026 Travis. All rights reserved.</small></p>
+    <p class="footer-copyright"><small>&copy; 2026 Travis. All rights reserved.</small></p>
+    <p class="footer-greeting" id="greeting">Hello!</p>
+    <button type="button" class="theme-toggle" aria-pressed="false">
+      <span class="theme-toggle-icon" aria-hidden="true">&#9790;</span>
+      <span class="theme-toggle-text">Dark mode</span>
+    </button>
   </footer>
 
 </body>
