@@ -63,12 +63,24 @@
       </ul>
     </section>
 
-    <section id="currently-building">
-      <h2>Currently Building</h2>
-      <ul>
-        <li>Autonomous robot</li>
-        <li>Rover game for Android</li>
-      </ul>
+    <section id="future-projects">
+      <h2>Future Projects</h2>
+
+      <!-- Add a project: the cards below are rebuilt from a JavaScript array (see script.js) -->
+      <form id="project-form" class="project-form">
+        <p>
+          <label for="project-name">Project name</label>
+          <input type="text" id="project-name" name="project-name" placeholder="e.g. Solar-powered workshop" required>
+        </p>
+        <p>
+          <label for="project-description">Description</label>
+          <textarea id="project-description" name="project-description" rows="3" placeholder="What is it and why build it?" required></textarea>
+        </p>
+        <button type="submit">Add Project</button>
+      </form>
+
+      <p class="project-hint" id="project-hint">Drag a card to change its order.</p>
+      <ul class="project-cards" id="project-cards" aria-describedby="project-hint"></ul>
     </section>
 
     <section id="projects">
