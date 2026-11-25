@@ -275,6 +275,36 @@ main h3 {
   text-align: center;
 }
 
+/* The display: grid above would override the "hidden" attribute,
+   so hidden lists need this to actually disappear */
+#skills ul[hidden] {
+  display: none;
+}
+
+/* Show/hide button inside the Skills heading: styled as plain heading
+   text (no box) so it looks exactly like the other section titles.
+   Hover uses the same text effect as links (section 3). */
+#skills .skills-toggle {
+  padding: 0;
+  font: inherit;                    /* same size and weight as the h2 */
+  color: inherit;                   /* same color as the other headings */
+  background: none;
+  border: none;
+  border-radius: 0;
+  text-align: left;
+  /* Underlines don't pass from the h2 into a button, so repeat the
+     heading underline here (matches "main h2" in section 6) */
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 2px;
+}
+
+#skills .skills-toggle:hover,
+#skills .skills-toggle:focus-visible {
+  color: var(--color-text);
+  background: none;
+}
+
 
 /* ==========================================================================
    8. ARTICLES (Projects & Recent Posts)

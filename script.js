@@ -36,6 +36,31 @@ document.addEventListener("keydown", (event) => {
 
 
 // ==========================================================================
+// Skills show/hide button
+// "Skills"      -> list hidden; click to show it
+// "Hide Skills" -> list visible; click to hide it
+// The list starts hidden. It's hidden here rather than in the HTML so the
+// skills stay visible if JavaScript fails to load.
+// ==========================================================================
+
+const skillsToggle = document.querySelector(".skills-toggle");
+const skillsList = document.querySelector("#skills-list");
+
+function setSkillsVisible(isVisible) {
+  skillsList.hidden = !isVisible;
+  skillsToggle.textContent = isVisible ? "Hide Skills" : "Skills";
+  // aria-expanded tells screen readers whether the list is open
+  skillsToggle.setAttribute("aria-expanded", String(isVisible));
+}
+
+setSkillsVisible(false);
+
+skillsToggle.addEventListener("click", () => {
+  setSkillsVisible(skillsList.hidden);
+});
+
+
+// ==========================================================================
 // Dark / light theme toggle (footer, bottom right)
 // The starting theme is set by a small script in the <head> of index.html:
 // the visitor's saved choice, or their system setting if they haven't chosen.
