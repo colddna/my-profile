@@ -61,6 +61,23 @@ skillsToggle.addEventListener("click", () => {
 
 
 // ==========================================================================
+// Message character counter (bottom right of the contact form's textarea)
+// Updates on every change: typing, pasting, deleting.
+// ==========================================================================
+
+const messageBox = document.querySelector("textarea#message");
+const messageCount = document.querySelector("#message-count");
+
+function updateMessageCount() {
+  const count = messageBox.value.length;
+  messageCount.textContent = count + (count === 1 ? " character" : " characters");
+}
+
+updateMessageCount(); // covers text the browser restores after a reload
+messageBox.addEventListener("input", updateMessageCount);
+
+
+// ==========================================================================
 // Dark / light theme toggle (footer, bottom right)
 // The starting theme is set by a small script in the <head> of index.html:
 // the visitor's saved choice, or their system setting if they haven't chosen.

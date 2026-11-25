@@ -136,7 +136,9 @@
 
         <p>
           <label for="message">Message</label>
-          <textarea id="message" name="message" rows="6" placeholder="Tell me about your project or question..." required></textarea>
+          <textarea id="message" name="message" rows="6" placeholder="Tell me about your project or question..." aria-describedby="message-count" required></textarea>
+          <!-- Character counter, updated by script.js -->
+          <span class="char-count" id="message-count">0 characters</span>
         </p>
 
         <button type="submit">Send message</button>
