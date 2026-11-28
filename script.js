@@ -1,4 +1,98 @@
 // ==========================================================================
+// Projects
+// The list is NOT hardcoded in the HTML. Each project lives in the
+// `projects` array below; renderProjects() clears the list and rebuilds one
+// <li> per project. The form above the list adds a project to the array
+// and calls renderProjects() again.
+// `level` is one of: "not started", "starting", "working", "complete"
+// ==========================================================================
+
+const projects = [
+  { name: "Autonomous Robot", level: "working" },
+  { name: "Rover Game for Android", level: "starting" },
+  { name: "Custom Welding Cart", level: "complete" },
+];
+
+const projectsForm = document.querySelector("#projects-form");
+const projectsNameInput = document.querySelector("#projects-name");
+const projectsLevelSelect = document.querySelector("#projects-level");
+const projectsList = document.querySelector("#projects-list");
+const projectsFilters = document.querySelector("#projects-filters");
+const projectsCount = document.querySelector("#projects-count");
+
+// Which filter button is active: "all" or one of the levels above
+let activeFilter = "all";
+
+// Clear the list, then build one styled <li> for each project that
+// matches the active filter, and update the count below the list
+function renderProjects() {
+  projectsList.replaceChildren();
+
+  const visible = projects.filter(
+    (project) => activeFilter === "all" || project.level === activeFilter
+  );
+
+  projectsCount.textContent =
+    visible.length + " out of " + projects.length + (projects.length === 1 ? " project" : " projects");
+
+  if (visible.length === 0) {
+    const empty = document.createElement("li");
+    empty.className = "projects-empty";
+    empty.textContent = "No projects match this filter.";
+    projectsList.append(empty);
+    return;
+  }
+
+  visible.forEach((project) => {
+    const item = document.createElement("li");
+    // e.g. "not started" -> class "level-not-started" (styled in styles.css)
+    item.className = "projects-item level-" + project.level.replace(/\s+/g, "-");
+
+    const name = document.createElement("span");
+    name.className = "projects-item-name";
+    name.textContent = project.name; // textContent: typed text shows as plain text
+
+    const level = document.createElement("span");
+    level.className = "projects-item-level";
+    level.textContent = project.level;
+
+    item.append(name, level);
+    projectsList.append(item);
+  });
+}
+
+projectsForm.addEventListener("submit", (e) => {
+  e.preventDefault(); // stop the browser from reloading the page
+
+  const name = projectsNameInput.value.trim();
+  if (!name) return; // ignore entries that are only spaces
+
+  projects.push({ name, level: projectsLevelSelect.value });
+  renderProjects();
+
+  projectsForm.reset();
+  projectsNameInput.focus(); // ready for the next one
+});
+
+// One listener on the button group handles every filter button
+projectsFilters.addEventListener("click", (e) => {
+  const button = e.target.closest("button[data-filter]");
+  if (!button) return;
+
+  activeFilter = button.dataset.filter;
+
+  // aria-pressed marks the active button (screen readers + the CSS highlight)
+  projectsFilters.querySelectorAll("button[data-filter]").forEach((b) => {
+    b.setAttribute("aria-pressed", String(b === button));
+  });
+
+  renderProjects();
+});
+
+renderProjects(); // build the list on page load
+
+
+// ==========================================================================
 // Mobile nav toggle (the three-line "hamburger" button)
 // The button only appears below 768px (see styles.css, section 5).
 // ==========================================================================
@@ -80,7 +174,7 @@ messageBox.addEventListener("input", updateMessageCount);
 // ==========================================================================
 // Future Projects
 // The cards are NOT hardcoded in the HTML. They're built from the
-// `projects` array below, and rebuilt (re-rendered) after every change:
+// `futureProjects` array below, and rebuilt (re-rendered) after every change:
 //   - submitting the form adds a project
 //   - the × button deletes one
 //   - dragging a card onto another moves it to that spot
@@ -106,7 +200,7 @@ const projectNameInput = document.querySelector("#project-name");
 const projectDescInput = document.querySelector("#project-description");
 const projectCards = document.querySelector("#project-cards");
 
-let projects = loadProjects();
+let futureProjects = loadProjects();
 
 // Read the saved array; fall back to the samples if there's nothing valid
 function loadProjects() {
@@ -123,7 +217,7 @@ function loadProjects() {
 
 function saveProjects() {
   try {
-    localStorage.setItem(PROJECTS_KEY, JSON.stringify(projects));
+    localStorage.setItem(PROJECTS_KEY, JSON.stringify(futureProjects));
   } catch (error) {
     // Storage can be blocked (e.g. private browsing); the page still works,
     // changes just won't survive a reload
@@ -166,10 +260,10 @@ function createProjectCard(project, index) {
 }
 
 // Clear the list and rebuild every card from the array
-function renderProjects() {
+function renderFutureProjects() {
   projectCards.replaceChildren();
 
-  if (projects.length === 0) {
+  if (futureProjects.length === 0) {
     const empty = document.createElement("li");
     empty.className = "project-empty";
     empty.textContent = "No future projects yet. Add one above.";
@@ -177,7 +271,7 @@ function renderProjects() {
     return;
   }
 
-  projects.forEach((project, index) => {
+  futureProjects.forEach((project, index) => {
     projectCards.append(createProjectCard(project, index));
   });
 }
@@ -190,9 +284,9 @@ projectForm.addEventListener("submit", (e) => {
   const description = projectDescInput.value.trim();
   if (!name || !description) return; // ignore entries that are only spaces
 
-  projects.push({ name, description });
+  futureProjects.push({ name, description });
   saveProjects();
-  renderProjects();
+  renderFutureProjects();
 
   projectForm.reset();
   projectNameInput.focus(); // ready for the next one
@@ -206,9 +300,9 @@ projectCards.addEventListener("click", (e) => {
   const deleteButton = e.target.closest(".project-delete");
   if (!deleteButton) return;
 
-  projects.splice(Number(deleteButton.dataset.index), 1);
+  futureProjects.splice(Number(deleteButton.dataset.index), 1);
   saveProjects();
-  renderProjects();
+  renderFutureProjects();
 });
 
 // --- Drag-and-drop reordering ----------------------------------------------------
@@ -251,10 +345,10 @@ projectCards.addEventListener("drop", (e) => {
 
   const dropIndex = Number(card.dataset.index);
   if (dropIndex !== dragFromIndex) {
-    const [moved] = projects.splice(dragFromIndex, 1); // take it out...
-    projects.splice(dropIndex, 0, moved);              // ...and put it in the new spot
+    const [moved] = futureProjects.splice(dragFromIndex, 1); // take it out...
+    futureProjects.splice(dropIndex, 0, moved);              // ...and put it in the new spot
     saveProjects();
-    renderProjects();
+    renderFutureProjects();
   }
 });
 
@@ -267,7 +361,7 @@ projectCards.addEventListener("dragend", () => {
   });
 });
 
-renderProjects();
+renderFutureProjects();
 
 
 // ==========================================================================

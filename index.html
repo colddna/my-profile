@@ -86,23 +86,35 @@
     <section id="projects">
       <h2>Projects</h2>
 
-      <article>
-        <h3>Autonomous Robot</h3>
-        <p>A self-navigating robot that uses sensors to map its surroundings and avoid obstacles on its own.</p>
-        <a href="#">View project</a>
-      </article>
+      <!-- Add a project: the list below is rebuilt from the `projects` array (see script.js) -->
+      <form id="projects-form" class="projects-form">
+        <p class="projects-form-field">
+          <label for="projects-name">Project name</label>
+          <input type="text" id="projects-name" name="projects-name" placeholder="e.g. Trailer hitch rack" required>
+        </p>
+        <p class="projects-form-field">
+          <label for="projects-level">Completeness</label>
+          <select id="projects-level" name="projects-level">
+            <option value="not started">Not started</option>
+            <option value="starting">Starting</option>
+            <option value="working">Working</option>
+            <option value="complete">Complete</option>
+          </select>
+        </p>
+        <button type="submit">Add</button>
+      </form>
 
-      <article>
-        <h3>Rover Game for Android</h3>
-        <p>A mobile game where players drive a rover across rugged terrain, built for Android devices.</p>
-        <a href="#">View project</a>
-      </article>
+      <!-- Filter buttons: show only projects at one completeness level (see script.js) -->
+      <div class="projects-filters" id="projects-filters" role="group" aria-label="Filter projects by completeness">
+        <button type="button" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" data-filter="not started" aria-pressed="false">Not started</button>
+        <button type="button" data-filter="starting" aria-pressed="false">Starting</button>
+        <button type="button" data-filter="working" aria-pressed="false">Working</button>
+        <button type="button" data-filter="complete" aria-pressed="false">Complete</button>
+      </div>
 
-      <article>
-        <h3>Custom Welding Cart</h3>
-        <p>A heavy-duty welding cart fabricated from scratch, with storage for tanks, leads, and tools.</p>
-        <a href="#">View project</a>
-      </article>
+      <ul class="projects-list" id="projects-list"></ul>
+      <p class="projects-count" id="projects-count" aria-live="polite"></p>
     </section>
 
     <section id="recent-posts">

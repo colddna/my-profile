@@ -407,7 +407,123 @@ main h3 {
 
 
 /* ==========================================================================
-   8. ARTICLES (Projects & Recent Posts)
+   7c. PROJECTS (list built by renderProjects() in script.js)
+   Form row on top (name, completeness, Add), then one tile per project
+   with a completeness badge. Badges get "fuller" as work progresses:
+   not started = dashed, starting = outline, working = shaded, complete = solid.
+   ========================================================================== */
+.projects-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.projects-form-field {
+  flex: 1 1 10rem;
+  margin: 0;                       /* the flex gap handles spacing */
+}
+
+/* Filter buttons: outlined by default; the active one (aria-pressed="true")
+   gets the solid accent background */
+.projects-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.projects-filters button {
+  padding: 0.35rem 0.9rem;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  background-color: transparent;
+  border: 2px solid var(--color-accent);
+}
+
+.projects-filters button:hover,
+.projects-filters button:focus-visible {
+  color: var(--color-text);
+  background-color: color-mix(in srgb, var(--color-accent) 20%, transparent);
+  border-color: var(--color-text);
+}
+
+.projects-filters button[aria-pressed="true"] {
+  color: var(--color-bg);
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  text-shadow: none;
+}
+
+.projects-count {
+  margin: 0.75rem 0 0;
+  font-size: 0.875rem;
+  color: var(--color-accent);
+}
+
+.projects-empty {
+  color: var(--color-accent);
+  font-style: italic;
+}
+
+.projects-list {
+  display: grid;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.projects-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-accent);
+  border-left-width: 4px;
+  border-radius: var(--radius);
+}
+
+.projects-item-name {
+  font-weight: 600;
+  min-width: 0;
+  overflow-wrap: anywhere;         /* long names wrap instead of overflowing */
+}
+
+.projects-item-level {
+  flex-shrink: 0;
+  padding: 0.15rem 0.65rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  border: 2px solid var(--color-accent);
+  border-radius: 999px;
+  color: var(--color-accent);
+}
+
+.level-not-started .projects-item-level {
+  border-style: dashed;
+}
+
+.level-working .projects-item-level {
+  background-color: color-mix(in srgb, var(--color-accent) 25%, transparent);
+  color: var(--color-text);
+}
+
+.level-complete .projects-item-level {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+}
+
+.level-complete {
+  border-left-color: var(--color-text);
+}
+
+
+/* ==========================================================================
+   8. ARTICLES (Recent Posts)
    Each article gets a left accent bar and breathing room.
    ========================================================================== */
 article {
