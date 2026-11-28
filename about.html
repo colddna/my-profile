@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="About Travis: background as an analyst, fabricator, welder and mechanic.">
+  <title>Travis | About</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Apply the saved (or system) theme before the page paints, so there's no flash.
+       Repeated on every page because it has to run before the page draws. -->
+  <script>
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("theme"); } catch (e) {}
+      if (theme !== "dark" && theme !== "light") {
+        theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <script src="scripts.js" defer></script>
+</head>
+<body>
+
+  <!-- Same nav on every page; aria-current="page" marks (and highlights) the current one -->
+  <nav aria-label="Main navigation">
+    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+      <span class="nav-toggle-line"></span>
+      <span class="nav-toggle-line"></span>
+      <span class="nav-toggle-line"></span>
+    </button>
+    <ul id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" aria-current="page">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>About</h1>
+  </header>
+
+  <main>
+    <section id="about">
+      <h2>Background</h2>
+      <p>
+        As an analyst, I developed skills to break apart what is seen and find out
+        the workings of many problems. Carrying that mindset into the civilian world
+        opened my career path to fabrication and mechanics.
+      </p>
+    </section>
+
+    <section id="skills">
+      <!-- The heading holds a button that shows/hides the list (see scripts.js) -->
+      <h2>
+        <button type="button" class="skills-toggle" aria-expanded="true" aria-controls="skills-list">Skills</button>
+      </h2>
+      <ul id="skills-list">
+        <li>Fabricator</li>
+        <li>Welder</li>
+        <li>Mechanic</li>
+        <li>Computer enthusiast</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p class="footer-copyright"><small>&copy; 2026 Travis. All rights reserved.</small></p>
+    <p class="footer-greeting" id="greeting">Hello!</p>
+    <button type="button" class="theme-toggle" aria-pressed="false">
+      <span class="theme-toggle-icon" aria-hidden="true">&#9790;</span>
+      <span class="theme-toggle-text">Dark mode</span>
+    </button>
+  </footer>
+
+</body>
+</html>

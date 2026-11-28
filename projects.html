@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Projects by Travis: current builds and future plans.">
+  <title>Travis | Projects</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Apply the saved (or system) theme before the page paints, so there's no flash.
+       Repeated on every page because it has to run before the page draws. -->
+  <script>
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem("theme"); } catch (e) {}
+      if (theme !== "dark" && theme !== "light") {
+        theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <script src="scripts.js" defer></script>
+</head>
+<body>
+
+  <!-- Same nav on every page; aria-current="page" marks (and highlights) the current one -->
+  <nav aria-label="Main navigation">
+    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+      <span class="nav-toggle-line"></span>
+      <span class="nav-toggle-line"></span>
+      <span class="nav-toggle-line"></span>
+    </button>
+    <ul id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html" aria-current="page">Projects</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>Projects</h1>
+  </header>
+
+  <main>
+    <section id="projects">
+      <h2>Current Projects</h2>
+
+      <!-- Add a project: the list below is rebuilt from the `projects` array (see scripts.js) -->
+      <form id="projects-form" class="projects-form">
+        <p class="projects-form-field">
+          <label for="projects-name">Project name</label>
+          <input type="text" id="projects-name" name="projects-name" placeholder="e.g. Trailer hitch rack" required>
+        </p>
+        <p class="projects-form-field">
+          <label for="projects-level">Completeness</label>
+          <select id="projects-level" name="projects-level">
+            <option value="not started">Not started</option>
+            <option value="starting">Starting</option>
+            <option value="working">Working</option>
+            <option value="complete">Complete</option>
+          </select>
+        </p>
+        <button type="submit">Add</button>
+      </form>
+
+      <!-- Filter buttons: show only projects at one completeness level (see scripts.js) -->
+      <div class="projects-filters" id="projects-filters" role="group" aria-label="Filter projects by completeness">
+        <button type="button" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" data-filter="not started" aria-pressed="false">Not started</button>
+        <button type="button" data-filter="starting" aria-pressed="false">Starting</button>
+        <button type="button" data-filter="working" aria-pressed="false">Working</button>
+        <button type="button" data-filter="complete" aria-pressed="false">Complete</button>
+      </div>
+
+      <ul class="projects-list" id="projects-list"></ul>
+      <p class="projects-count" id="projects-count" aria-live="polite"></p>
+    </section>
+
+    <section id="future-projects">
+      <h2>Future Projects</h2>
+
+      <!-- Add a project: the cards below are rebuilt from a JavaScript array (see scripts.js) -->
+      <form id="project-form" class="project-form">
+        <p>
+          <label for="project-name">Project name</label>
+          <input type="text" id="project-name" name="project-name" placeholder="e.g. Solar-powered workshop" required>
+        </p>
+        <p>
+          <label for="project-description">Description</label>
+          <textarea id="project-description" name="project-description" rows="3" placeholder="What is it and why build it?" required></textarea>
+        </p>
+        <button type="submit">Add Project</button>
+      </form>
+
+      <p class="project-hint" id="project-hint">Drag a card to change its order.</p>
+      <ul class="project-cards" id="project-cards" aria-describedby="project-hint"></ul>
+    </section>
+  </main>
+
+  <footer>
+    <p class="footer-copyright"><small>&copy; 2026 Travis. All rights reserved.</small></p>
+    <p class="footer-greeting" id="greeting">Hello!</p>
+    <button type="button" class="theme-toggle" aria-pressed="false">
+      <span class="theme-toggle-icon" aria-hidden="true">&#9790;</span>
+      <span class="theme-toggle-text">Dark mode</span>
+    </button>
+  </footer>
+
+</body>
+</html>

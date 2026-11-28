@@ -25,7 +25,7 @@
 }
 
 /* Dark theme: same three roles, swapped for a dark background.
-   Set by the theme toggle in the footer (see script.js). */
+   Set by the theme toggle in the footer (see scripts.js). */
 :root[data-theme="dark"] {
   --color-bg: #1f2022;      /* deep charcoal: page background */
   --color-text: #e4e3df;    /* soft off-white: body text */
@@ -160,13 +160,33 @@ nav a {
   text-decoration: none;
 }
 
+nav a {
+  display: inline-block;
+  padding: 0.25rem 0.85rem;
+  border-radius: var(--radius);
+}
+
 nav a:hover,
 nav a:focus-visible {
   text-decoration: underline;
 }
 
+/* Active page: each page's HTML puts aria-current="page" on its own link.
+   Solid accent background with page-colored text, like the active filter. */
+nav a[aria-current="page"] {
+  color: var(--color-bg);
+  background-color: var(--color-accent);
+  text-shadow: none;
+}
+
+nav a[aria-current="page"]:hover,
+nav a[aria-current="page"]:focus-visible {
+  color: var(--color-bg);
+  background-color: var(--color-text);
+}
+
 /* --- Hamburger menu (phones only) ---------------------------------------
-   Three lines that open/close the nav. script.js adds the
+   Three lines that open/close the nav. scripts.js adds the
    .nav-collapsible class to <nav>; without it (JS off) the button stays
    hidden and the links stay visible, so the nav always works.
    "nav button.nav-toggle" is used so these rules beat the general
@@ -307,7 +327,7 @@ main h3 {
 
 
 /* ==========================================================================
-   7b. FUTURE PROJECTS (cards built by script.js from an array)
+   7b. FUTURE PROJECTS (cards built by scripts.js from an array)
    Form on top, then a list of draggable cards with a delete (×) button.
    Fields and the Add Project button reuse the form styles in section 10.
    ========================================================================== */
@@ -407,7 +427,7 @@ main h3 {
 
 
 /* ==========================================================================
-   7c. PROJECTS (list built by renderProjects() in script.js)
+   7c. PROJECTS (list built by renderProjects() in scripts.js)
    Form row on top (name, completeness, Add), then one tile per project
    with a completeness badge. Badges get "fuller" as work progresses:
    not started = dashed, starting = outline, working = shaded, complete = solid.
